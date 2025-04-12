@@ -7,21 +7,26 @@ import furhatos.flow.kotlin.*
 
 val ConversationParent : State = state {
 
-    onResponse<RudeInterrupt> {
+    onResponse<RudeInterrupt>(instant = true, cond = {it.interrupted}) {
+        furhat.pauseSpeaking()
         if (rudeList.isEmpty()) {
             goto(Fail)
         }
         val response = rudeList.random()
-        furhat.say(response)
+        //furhat.say(response)
         rudeList.remove(response)
+        furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +response }
     }
-    onResponse<PoliteInterrupt> {
-        if (polSelector.isEmpty()) {
+    onResponse<PoliteInterrupt>(instant = true, cond = {it.interrupted}) {
+        polCounter++
+        furhat.pauseSpeaking()
+        if (polCounter > 2) {
             goto(Fail)
         }
         val index = polSelector.random()
-        furhat.say(polList[index])
+        //furhat.say(polList[index])
         polSelector.remove(index)
+        furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +polList[index] }
     }
 }
 
@@ -43,9 +48,16 @@ val polInterrupt2 = utterance {
     +"Oh, I almost forgot to tell you something else....!"
 }
 
+var polCounter = 0
+
 val polList = listOf(polInterrupt1, polInterrupt2)
 
 var polSelector = mutableListOf<Int>(0,1)
+
+fun resetPolSelector() {
+    polSelector = mutableListOf(0, 1)
+}
+
 
 val rudeInterrupt1 = utterance {
     +GesturesLib.ExpressIrritation2()
