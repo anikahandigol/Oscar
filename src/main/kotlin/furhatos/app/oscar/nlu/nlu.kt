@@ -115,7 +115,6 @@ class UserNotInterested : Intent() {
             "Kind of",
             "It is not",
             "I guess",
-            "stop",
             "i don't care",
         )
     }

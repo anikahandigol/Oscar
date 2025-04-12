@@ -1,17 +1,33 @@
 package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
+import furhatos.app.oscar.nlu.UserIsInterested
+import furhatos.app.oscar.nlu.UserNotInterested
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 
-val ParisFacts : State = state {
+val ParisFacts : State = state(parent = ConversationParent) {
     onEntry {
-        furhat.say(interruptable = true) {
-            +factList.random()
+        if (factList.isEmpty()) {
+            goto(Fail)
         }
+        resetPolSelector()
+        val dialogue = getDialogue(factList)
+        furhat.say(interruptable = true) {
+            +dialogue
+        }
+        furhat.listen()
     }
 
-    onResponse {}
+    onResponse<UserIsInterested> {
+        //goto(ParisAdvice)
+        furhat.say("user interested")
+    }
+
+    onResponse<UserNotInterested> {
+        furhat.say("Oh, did that not catch your interest? Maybe this will!")
+        reentry()
+    }
 }
 
 val fact1 = utterance {
@@ -50,10 +66,10 @@ val fact4 = utterance {
 
 val factList = mutableListOf(fact1, fact2, fact3, fact4)
 
-fun getDialogue(list: MutableList<String>) : String {
+fun getDialogue(list: MutableList<Utterance>) : Utterance {
 
     if (list.size == 0) {
-        return ""
+        return utterance { +"" }
     }
     println("before saying: "+ list.size)
     val dialogue = list.random()

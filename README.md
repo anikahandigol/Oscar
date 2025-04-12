@@ -1,5 +1,7 @@
 # Skill
-Template skill
+- need to put AskForPlatform intent in SmallTalk state
+- need to configure polite interrupt dialogue and how to not make the dialogues repeat
+- when interrupted, the trigger doesnt allow SayState to be used
 
 ## Description
 This is a skill template, see [the docs](https://docs.furhat.io/skills/#the-contents-of-a-skill) for a breakdown of the content. 
