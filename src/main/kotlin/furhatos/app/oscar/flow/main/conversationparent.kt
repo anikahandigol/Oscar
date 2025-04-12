@@ -16,8 +16,7 @@ val ConversationParent : State = state {
         rudeList.remove(response)
     }
     onResponse<PoliteInterrupt> {
-        polCount++
-        if (polCount <= 2) {
+        if (polSelector.isEmpty()) {
             goto(Fail)
         }
         val index = polSelector.random()
@@ -34,8 +33,6 @@ val polInterrupt1 = utterance {
     +GesturesLib.PerformTripleBlink
     +"oh, right, I was saying something......! "
 }
-
-var polCount = 0
 
 val polInterrupt2 = utterance {
     +GesturesLib.ExpressSmileApologetic2()
