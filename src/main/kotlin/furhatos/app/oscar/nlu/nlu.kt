@@ -30,6 +30,8 @@ class UserIsFine : Intent() {
             "I'm doing well",
             "All good",
             "I'm alright",
+            "great",
+            "okay",
             "I'm great",
             "Everything is fine",
             "I'm good",
@@ -65,6 +67,97 @@ class UserIsSad : Intent() {
             "its going bad",
             "not good",
             "im stressed"
+        )
+    }
+}
+
+class UserIsInterested : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Yeah",
+            "Cool",
+            "Yes",
+            "awesome",
+            "fascinating",
+            "Absolutely",
+            "I'm in",
+            "Fascinating",
+            "Interesting",
+            "Amazing",
+            "Lovely",
+            "I love that",
+            "It is",
+            "Yeah",
+            "Great",
+            "Yep",
+            "Nice"
+        )
+    }
+}
+
+class UserNotInterested : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "No",
+            "I don't think so",
+            "I don't want",
+            "I'm not sure",
+            "I don't feel like it",
+            "I don't think so",
+            "Sort of",
+            "Not really",
+            "Not at all",
+            "Nope",
+            "Sure",
+            "Kinda",
+            "Kind of",
+            "It is not",
+            "I guess",
+            "stop",
+            "i don't care",
+        )
+    }
+}
+
+class PoliteInterrupt : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Sorry",
+            "please",
+            "i'm in a rush",
+            "i'm in a hurry",
+            "could you",
+            "thanks",
+            "thank you",
+            "apologies",
+            "i apologise",
+            "sorry for interrupting",
+            "i hate to interrupt",
+            "could you tell me",
+            "can you tell me"
+        )
+    }
+}
+
+class RudeInterrupt : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "ugh",
+            "bro",
+            "can you just tell me",
+            "i don't care",
+            "oh my god",
+            "come on",
+            "c'mon",
+            "stop",
+            "stop talking",
+            "whatever",
+            "damn",
+            "just",
+            "just give me",
+            "just tell me",
+            "shut up",
+            "i don't have time for this"
         )
     }
 }

@@ -10,9 +10,6 @@ import furhatos.gestures.Gesture
 import furhatos.gestures.Gestures
 import furhatos.nlu.common.No
 import furhatos.nlu.common.TellName
-import furhatos.skills.UserManager
-
-// import furhatos.nlu.common.Yes
 
 val Greeting: State = state(Parent) {
     onEntry {
@@ -24,7 +21,7 @@ val Greeting: State = state(Parent) {
                 greeting4
             )
         )
-        furhat.listen()
+        furhat.listen(5000)
     }
 
     onResponse<UserIsFine> {
@@ -38,6 +35,7 @@ val Greeting: State = state(Parent) {
         furhat.say(utterance{
             +Gestures.ExpressSad
             +"Aw, sorry to hear that, I hope I can make things a little better for you today. I'm Oscar by the way, what's your name?" })
+        furhat.listen()
     }
 
     onResponse<No> {
@@ -48,38 +46,58 @@ val Greeting: State = state(Parent) {
 
     onResponse<AskForPlatform> {
         furhat.run {
-            say(utterance {
-                +"Oh, Paris, wow! Give me a second, I'll look that up for you..."
-                +GesturesLib.PerformHeadDown()
-            })
+            say(
+                random(
+                    ask1,
+                    ask2,
+                    ask3,
+                    ask4
+                )
+            )
         }
-        //goto()
+        goto(SmallTalk)
     }
 
     onResponse<TellName> {
         val name = it.intent.name
 
         furhat.say(
-            "What a beautiful name, $name! Is there anything I can help you with today?"
+            utterance{
+
+                +Gestures.BigSmile
+                +"What a beautiful name, $name!"
+                +Gestures.Smile
+                +"Is there anything I can help you with today?" }
         )
         furhat.listen()
     }
 
 }
 
-fun createGestureUtterance(text: String, gesture : Gesture): Utterance {
+fun createGestureUtterance(text: String, gesture : Gesture, loc: String): Utterance {
+    if (loc == "last") {
+        return utterance {
+            +text
+            +gesture
+        }
+    }
     return utterance {
         +gesture
         +text
     }
 }
 
-val greeting1 = createGestureUtterance("Hey! How are you today?", Gestures.BigSmile)
-val greeting2 = createGestureUtterance("Hi! How are you doing today?", Gestures.BigSmile)
-val greeting3 = createGestureUtterance("Hello! How is it going?", Gestures.BigSmile)
-val greeting4 = createGestureUtterance("Hey there! How's it going?", Gestures.BigSmile)
+val greeting1 = createGestureUtterance("Hey! How are you doing today?", Gestures.BigSmile, "first")
+val greeting2 = createGestureUtterance("Hi! How's your day been treating you?", Gestures.BigSmile, "first")
+val greeting3 = createGestureUtterance("Hello! How is everything going today?", Gestures.BigSmile, "first")
+val greeting4 = createGestureUtterance("Hey there! good to see you! How's it going?", Gestures.BigSmile, "first")
 
-val sad1 = createGestureUtterance("Awww.... are you sure?", Gestures.ExpressSad)
-val sad2 = createGestureUtterance("Okay, then.",Gestures.ExpressSad)
-val sad3 = createGestureUtterance("Ah, how I love my job.", Gestures.ExpressSad)
-val sad4 = createGestureUtterance("Alright, I'll just be here, with no one to talk to.", Gestures.ExpressSad)
+val sad1 = createGestureUtterance("Awww.... are you sure?", Gestures.ExpressSad, "first")
+val sad2 = createGestureUtterance("Okay, then.",Gestures.ExpressSad, "first")
+val sad3 = createGestureUtterance("Ah, how I love my job.", Gestures.ExpressSad, "first")
+val sad4 = createGestureUtterance("Alright, I'll just be here, with no one to talk to.", Gestures.ExpressSad, "first")
+
+val ask1 = createGestureUtterance("Absolutely, let me check that for you right away...", Gestures.BigSmile, "first")
+val ask2 = createGestureUtterance("I'd be happy to help with that- just one moment...", Gestures.BigSmile, "first")
+val ask3 = createGestureUtterance("Hmmm, good question! Let me verify that quickly...", GesturesLib.ExpressThinking(), "first")
+val ask4 = createGestureUtterance("Sure thing! Let me pull that up for you right away...", Gestures.BigSmile, "first")
