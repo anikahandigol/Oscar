@@ -1,4 +1,4 @@
-## Oscar: The Chatty Train Guide
+# Oscar: The Chatty Train Guide
 
 ## TODO
 - need to put AskForPlatform intent in SmallTalk state
