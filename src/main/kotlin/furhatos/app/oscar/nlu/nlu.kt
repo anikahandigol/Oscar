@@ -29,6 +29,8 @@ class UserIsFine : Intent() {
             "I'm okay",
             "I'm doing well",
             "All good",
+            "I'm fine",
+            "fine",
             "I'm alright",
             "great",
             "okay",

@@ -33,7 +33,7 @@ val fact2 = utterance {
 
 val fact3 = utterance {
     +GesturesLib.PerformBigSmile1
-    +"Oh, I really love Paris!"
+    +"I really do love the place!"
     +"Can you believe there are at least 3"
     +Gestures.BrowRaise
     +"replicas of the Statue of Liberty in Paris? The most famous of them exists on an Island in the middle of the Seine and looks towards her sister statue in New York."
