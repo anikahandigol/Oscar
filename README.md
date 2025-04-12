@@ -1,5 +1,9 @@
-# Skill
+# TODO
 - need to put AskForPlatform intent in SmallTalk state
+- work on advice state (big chunk)
+- work on success state
+- work on fail state
+- work on easter egg state
 
 ## Description
 This is a skill template, see [the docs](https://docs.furhat.io/skills/#the-contents-of-a-skill) for a breakdown of the content. 
