@@ -8,7 +8,6 @@ import furhatos.flow.kotlin.*
 val ConversationParent : State = state {
 
     onResponse<RudeInterrupt> {
-        rudeCount++
         if (rudeList.isEmpty()) {
             goto(Fail)
         }
@@ -35,8 +34,6 @@ val polInterrupt1 = utterance {
     +GesturesLib.PerformTripleBlink
     +"oh, right, I was saying something......! "
 }
-
-var rudeCount = 0
 
 var polCount = 0
 
