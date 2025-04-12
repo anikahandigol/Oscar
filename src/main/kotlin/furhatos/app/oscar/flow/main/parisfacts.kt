@@ -1,17 +1,21 @@
 package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
+import furhatos.app.oscar.nlu.PoliteInterrupt
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 
-val ParisFacts : State = state {
+val ParisFacts : State = state() {
     onEntry {
         furhat.say(interruptable = true) {
             +factList.random()
         }
+        furhat.listen()
     }
 
-    onResponse {}
+    onResponse<PoliteInterrupt>(cond = {it.interrupted}) {
+
+    }
 }
 
 val fact1 = utterance {
