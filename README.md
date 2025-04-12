@@ -1,9 +1,15 @@
-# TODO
+## Oscar: The Chatty Train Guide
+
+## TODO
 - need to put AskForPlatform intent in SmallTalk state
 - work on advice state (big chunk)
 - work on success state
 - work on fail state
 - work on easter egg state
+
+## Known bugs
+- ethnic names not recognised
+- Upon reaching the conversation states, if Oscar does not understand or hear the user when they interrupt, the flow stops, even after the user repeats themselves and their intent is recognised.
 
 ## Description
 This is a skill template, see [the docs](https://docs.furhat.io/skills/#the-contents-of-a-skill) for a breakdown of the content. 
