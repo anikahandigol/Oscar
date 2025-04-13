@@ -1,8 +1,7 @@
 # Oscar: The Chatty Train Guide
 
 ## TODO
-- need to put AskForPlatform intent in SmallTalk state
-- work on advice state (big chunk)
+- work on advice state (big chonk)
 - work on success state
 - work on fail state
 - work on easter egg state
