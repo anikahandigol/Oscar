@@ -1,7 +1,7 @@
 # Oscar: The Chatty Train Guide
 
 ## TODO
-- work on advice state (big chonk)
+- work on advice state (additional questions and intents)
 - work on easter egg state
 
 ## Known bugs
