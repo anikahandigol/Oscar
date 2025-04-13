@@ -2,8 +2,6 @@
 
 ## TODO
 - work on advice state (big chonk)
-- work on success state
-- work on fail state
 - work on easter egg state
 
 ## Known bugs
