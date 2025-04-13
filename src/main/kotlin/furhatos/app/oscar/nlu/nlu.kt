@@ -182,3 +182,106 @@ class AdviceOneYes : Intent() {
         )
     }
 }
+
+class AdviceTwoMaps : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Maps",
+            "map",
+            "I would miss maps",
+            "i would miss the map app"
+        )
+    }
+}
+
+class AdviceTwoMusic : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Music",
+            "spotify",
+            "apple music",
+            "youtube music",
+            "songs",
+            "lyrics",
+            "dance",
+            "I would miss music",
+            "i would miss the music app"
+        )
+    }
+}
+
+class AdviceTwoPhotos : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Photos",
+            "gallery",
+            "picture",
+            "pictures",
+            "I would miss photos",
+            "i would miss the photos app"
+        )
+    }
+}
+
+class AdviceThreePlanned : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Planned",
+            "it was planned",
+            "recommendation",
+            "it was recommended to me",
+            "i searched for it",
+            "i found it"
+        )
+    }
+}
+
+class AdviceThreeSpontaneous : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Spontaneously",
+            "not planned",
+            "random",
+            "randomly",
+            "did not expect",
+            "didn't expect"
+        )
+    }
+}
+
+class AdviceFourExploring : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Exploring",
+            "explore",
+            "Roaming",
+            "roam",
+            "roam around",
+            "going",
+            "discover",
+            "discovering",
+            "new",
+            "new places",
+            "new people",
+            "meet people"
+        )
+    }
+}
+
+class AdviceFourSitting : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "chill",
+            "chilling",
+            "relax",
+            "relaxing",
+            "take it slow",
+            "slow",
+            "slowly",
+            "take my time",
+            "sit",
+            "sitting",
+            "tired",
+        )
+    }
+}

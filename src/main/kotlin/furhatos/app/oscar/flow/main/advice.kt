@@ -1,14 +1,10 @@
 package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
-import furhatos.app.oscar.nlu.AdviceOneYes
-import furhatos.app.oscar.nlu.AskForPlatform
-import furhatos.app.oscar.nlu.UserIsInterested
-import furhatos.app.oscar.nlu.UserNotInterested
+import furhatos.app.oscar.nlu.*
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.nlu.common.No
-import furhatos.nlu.common.Yes
 
 val Advice : State = state(ConversationParent) {
     onEntry {
@@ -100,11 +96,12 @@ val adviceFourQuestions = mutableMapOf<Int,String>(
 //    3 to "Have you ever had a moment where you felt like you belonged somewhere unexpected?"
 )
 
-val AdviceOneQuestion : State = state {
+val AdviceOneQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceOneQuestions.keys.random()
         if (adviceOneQuestions.isNotEmpty()) {
-            furhat.say(adviceOneQuestions[randomQuestionKey]!!)
+            furhat.say(interruptable = true) {+adviceOneQuestions[randomQuestionKey]!!}
+            furhat.listen()
         }
     }
     onResponse<No> {
@@ -123,11 +120,20 @@ val AdviceOneQuestion : State = state {
         })
         goto(AdviceOne)
     }
+
+    onResponse<AskForPlatform> {
+        furhat.say() {+Gestures.Smile
+        +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(AdviceOne)
+    }
 }
 
-val AdviceOne : State = state {
+val AdviceOne : State = state(parent = ConversationParent) {
     onEntry {
-        furhat.say(advice1)
+        furhat.ask(interruptable = true) {
+            +advice1
+        }
+        furhat.listen()
     }
 
     onResponse<UserIsInterested> {
@@ -141,36 +147,52 @@ val AdviceOne : State = state {
     }
 
     onResponse<AskForPlatform> {
-        furhat.say("askforplatform asked")
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(Advice)
     }
 }
 
-val AdviceTwoQuestion : State = state {
+val AdviceTwoQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceTwoQuestions.keys.random()
         if (adviceTwoQuestions.isNotEmpty()) {
-            furhat.say(adviceTwoQuestions[randomQuestionKey]!!)
+            furhat.say(interruptable = true){ adviceTwoQuestions[randomQuestionKey]!! }
+            furhat.listen()
         }
     }
-    onResponse<No> {
+    onResponse<AdviceTwoMaps> {
         furhat.say( utterance {
-            +Gestures.ExpressSad
-            +"Aww, that's a shame. "
-            +Gestures.Smile
-            +"I hope you get to experience it this time!"})
+            +GesturesLib.PerformDoubleNod()
+            +"I can totally relate, wouldn't want to get lost in a foreign country..."})
+        goto(AdviceTwo)
     }
 
-    onResponse<Yes> {
+    onResponse<AdviceTwoMusic> {
         furhat.say(utterance {
-            +Gestures.Smile
-            +"Wow, that sounds amazing! Definitely sticks with you!"
-        })
+            +GesturesLib.PerformDoubleNod()
+            +"That's definitely true, the trip back home would be a boring one without any music to jam to!" })
+        goto(AdviceTwo)
+    }
+
+    onResponse<AdviceTwoPhotos> {
+        furhat.say(utterance {
+            +GesturesLib.PerformDoubleNod()
+            +"Ah yes, if that happens, hope you are on the cloud!" })
+        goto(AdviceTwo)
+    }
+
+    onResponse<AskForPlatform> {
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(AdviceTwo)
     }
 }
 
-val AdviceTwo : State = state {
+val AdviceTwo : State = state(parent = ConversationParent) {
     onEntry {
-        furhat.say(advice2)
+        furhat.say(interruptable = true){+advice2}
+        furhat.listen()
     }
 
     onResponse<UserIsInterested> {
@@ -184,36 +206,48 @@ val AdviceTwo : State = state {
     }
 
     onResponse<AskForPlatform> {
-        furhat.say("askforplatform asked")
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(Advice)
     }
 }
 
-val AdviceThreeQuestion : State = state {
+val AdviceThreeQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceThreeQuestions.keys.random()
         if (adviceThreeQuestions.isNotEmpty()) {
-            furhat.say(adviceThreeQuestions[randomQuestionKey]!!)
+            furhat.say(interruptable = true){+adviceThreeQuestions[randomQuestionKey]!!}
+            furhat.listen()
         }
     }
-    onResponse<No> {
+    onResponse<AdviceThreePlanned> {
         furhat.say( utterance {
-            +Gestures.ExpressSad
-            +"Aww, that's a shame. "
-            +Gestures.Smile
-            +"I hope you get to experience it this time!"})
+            +Gestures.BigSmile
+            +"Ahh, you're definitely a person who knows what they want!"})
+        goto(AdviceThree)
     }
 
-    onResponse<Yes> {
+    onResponse<AdviceThreeSpontaneous> {
         furhat.say(utterance {
             +Gestures.Smile
-            +"Wow, that sounds amazing! Definitely sticks with you!"
+            +"That's sounds amazing, going with flow and the scent of good food!"
+            +GesturesLib.PerformDoubleNod()
+            +"It's a risky game to play though......."
         })
+        goto(AdviceThree)
+    }
+
+    onResponse<AskForPlatform> {
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(AdviceThree)
     }
 }
 
-val AdviceThree : State = state {
+val AdviceThree : State = state(parent = ConversationParent) {
     onEntry {
-        furhat.say(advice3)
+        furhat.say(interruptable = true){+advice3}
+        furhat.listen()
     }
 
     onResponse<UserIsInterested> {
@@ -227,36 +261,48 @@ val AdviceThree : State = state {
     }
 
     onResponse<AskForPlatform> {
-        furhat.say("askforplatform asked")
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(Advice)
     }
 }
 
-val AdviceFourQuestion : State = state {
+val AdviceFourQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceFourQuestions.keys.random()
         if (adviceFourQuestions.isNotEmpty()) {
-            furhat.say(adviceFourQuestions[randomQuestionKey]!!)
+            furhat.say(interruptable = true){+adviceFourQuestions[randomQuestionKey]!!}
+            furhat.listen()
         }
     }
-    onResponse<No> {
+    onResponse<AdviceFourExploring> {
         furhat.say( utterance {
-            +Gestures.ExpressSad
-            +"Aww, that's a shame. "
-            +Gestures.Smile
-            +"I hope you get to experience it this time!"})
+            +GesturesLib.PerformDoubleNod()
+            +"Oh that's great! I love exploring too, it's the best way to gain new experiences...... "
+            +GesturesLib.ExpressSmileLaughing1()
+            +"shenanigans too"})
+        goto(AdviceFour)
     }
 
-    onResponse<Yes> {
+    onResponse<AdviceFourSitting> {
         furhat.say(utterance {
             +Gestures.Smile
-            +"Wow, that sounds amazing! Definitely sticks with you!"
+            +"That sounds nice! It's always great to slow down and unwind, and soak in the day in a new place"
         })
+        goto(AdviceFour)
+    }
+
+    onResponse<AskForPlatform> {
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(AdviceFour)
     }
 }
 
-val AdviceFour : State = state {
+val AdviceFour : State = state(parent = ConversationParent) {
     onEntry {
-        furhat.say(advice4)
+        furhat.say(interruptable = true){+advice4}
+        furhat.listen()
     }
 
     onResponse<UserIsInterested> {
@@ -270,7 +316,9 @@ val AdviceFour : State = state {
     }
 
     onResponse<AskForPlatform> {
-        furhat.say("askforplatform asked")
+        furhat.say() {+Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
+        goto(Advice)
     }
 }
 
