@@ -162,3 +162,23 @@ class RudeInterrupt : Intent() {
         )
     }
 }
+
+class AdviceOneYes : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Yeah I have seen",
+            "Pretty cool",
+            "beautiful",
+            "pretty",
+            "definitely",
+            "cool",
+            "Yes",
+            "I saw",
+            "I have seen",
+            "I went",
+            "I got to see",
+            "magnificent",
+            "truly"
+        )
+    }
+}

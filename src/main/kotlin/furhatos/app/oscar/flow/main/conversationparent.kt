@@ -1,11 +1,12 @@
 package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
+import furhatos.app.oscar.flow.Parent
 import furhatos.app.oscar.nlu.PoliteInterrupt
 import furhatos.app.oscar.nlu.RudeInterrupt
 import furhatos.flow.kotlin.*
 
-val ConversationParent : State = state {
+val ConversationParent : State = state(Parent) {
 
     onResponse<RudeInterrupt>(instant = true, cond = {it.interrupted}) {
         furhat.pauseSpeaking()
@@ -13,7 +14,6 @@ val ConversationParent : State = state {
             goto(Fail)
         }
         val response = rudeList.random()
-        //furhat.say(response)
         rudeList.remove(response)
         furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +response }
     }
@@ -24,7 +24,6 @@ val ConversationParent : State = state {
             goto(Fail)
         }
         val index = polSelector.random()
-        //furhat.say(polList[index])
         polSelector.remove(index)
         furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +polList[index] }
     }

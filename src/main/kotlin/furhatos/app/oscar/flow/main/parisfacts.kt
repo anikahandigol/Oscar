@@ -20,8 +20,8 @@ val ParisFacts : State = state(parent = ConversationParent) {
     }
 
     onResponse<UserIsInterested> {
-        //goto(ParisAdvice)
-        furhat.say("user interested")
+        furhat.say("Glad you found that interesting! I have some helpful Paris tips and stories for you too!")
+        goto(Advice)
     }
 
     onResponse<UserNotInterested> {
