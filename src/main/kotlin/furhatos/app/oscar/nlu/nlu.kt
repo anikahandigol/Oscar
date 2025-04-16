@@ -17,7 +17,12 @@ class AskForPlatform : Intent() {
             "Which platform does the 2pm Eurostar to +Paris leave from?",
             "Where can I board the Eurostar going to +Paris at 2 o’clock?",
             "Where should I go to get the 2pm Eurostar to +Paris?",
-            "Where is the platform for the Eurostar going to Paris at 2 pm?"
+            "Where is the platform for the Eurostar going to Paris at 2 pm?",
+            "can you help me",
+            "can you tell me what",
+            "can you tell me where",
+            "tell me what",
+            "tell me where"
         )
     }
 }

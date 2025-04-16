@@ -27,7 +27,7 @@ val ParisFacts : State = state(parent = ConversationParent) {
             +GesturesLib.ExpressGuilt1()
             +"but unfortunately the schedule is still loading, "
             +GesturesLib.ExpressSmileApologetic2()
-            +"so you will have to wait a liiiittle bit longer"
+            +"so you will have to wait a little bit longer"
             +"But as I was saying............"})
         raise(it, it.secondaryIntent)
     }
