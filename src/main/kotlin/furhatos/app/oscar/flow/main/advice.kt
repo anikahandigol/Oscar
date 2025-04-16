@@ -99,6 +99,7 @@ val adviceFourQuestions = mutableMapOf<Int,String>(
 val AdviceOneQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceOneQuestions.keys.random()
+        println("length of advice questions: $adviceOneQuestions.size")
         if (adviceOneQuestions.isNotEmpty()) {
             furhat.say(interruptable = true) {+adviceOneQuestions[randomQuestionKey]!!}
             furhat.listen()
@@ -138,7 +139,7 @@ val AdviceOne : State = state(parent = ConversationParent) {
 
     onResponse<UserIsInterested> {
         furhat.say("Yay!! I'm glad you found that helpful! I hope it makes your trip more enjoyable")
-        goto(TrainFacts)
+        goto(FinalSmallTalk)
     }
 
     onResponse<UserNotInterested> {
@@ -157,9 +158,10 @@ val AdviceTwoQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceTwoQuestions.keys.random()
         if (adviceTwoQuestions.isNotEmpty()) {
-            furhat.say(interruptable = true){ adviceTwoQuestions[randomQuestionKey]!! }
+            furhat.ask(interruptable = true){ adviceTwoQuestions[randomQuestionKey]!! }
             furhat.listen()
         }
+        println("length of advice questions: $adviceTwoQuestions.size")
     }
     onResponse<AdviceTwoMaps> {
         furhat.say( utterance {
@@ -197,7 +199,7 @@ val AdviceTwo : State = state(parent = ConversationParent) {
 
     onResponse<UserIsInterested> {
         furhat.say("Yay!! I'm glad you found that helpful! I hope it makes your trip more enjoyable")
-        goto(TrainFacts)
+        goto(FinalSmallTalk)
     }
 
     onResponse<UserNotInterested> {
@@ -215,6 +217,8 @@ val AdviceTwo : State = state(parent = ConversationParent) {
 val AdviceThreeQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceThreeQuestions.keys.random()
+        println("length of advice questions: $adviceThreeQuestions.size")
+
         if (adviceThreeQuestions.isNotEmpty()) {
             furhat.say(interruptable = true){+adviceThreeQuestions[randomQuestionKey]!!}
             furhat.listen()
@@ -237,6 +241,14 @@ val AdviceThreeQuestion : State = state(parent = ConversationParent) {
         goto(AdviceThree)
     }
 
+    onResponse<AdviceThreeIDontKnow>{
+        furhat.say(utterance {
+            +Gestures.ExpressSad
+            +"Ahhh, that's okay, I'm sure you'll find lots of memorable meals in Paris!"})
+        goto(AdviceThree)
+
+    }
+
     onResponse<AskForPlatform> {
         furhat.say() {+Gestures.Smile
             +"I'll get to that in a minute.... after all, good things comes to those who wait!!"}
@@ -252,7 +264,7 @@ val AdviceThree : State = state(parent = ConversationParent) {
 
     onResponse<UserIsInterested> {
         furhat.say("Yay!! I'm glad you found that helpful! I hope it makes your trip more enjoyable")
-        goto(TrainFacts)
+        goto(FinalSmallTalk)
     }
 
     onResponse<UserNotInterested> {
@@ -270,6 +282,8 @@ val AdviceThree : State = state(parent = ConversationParent) {
 val AdviceFourQuestion : State = state(parent = ConversationParent) {
     onEntry {
         val randomQuestionKey = adviceFourQuestions.keys.random()
+        println("length of advice questions: $adviceFourQuestions.size")
+
         if (adviceFourQuestions.isNotEmpty()) {
             furhat.say(interruptable = true){+adviceFourQuestions[randomQuestionKey]!!}
             furhat.listen()
@@ -307,7 +321,7 @@ val AdviceFour : State = state(parent = ConversationParent) {
 
     onResponse<UserIsInterested> {
         furhat.say("Yay!! I'm glad you found that helpful! I hope it makes your trip more enjoyable")
-        goto(TrainFacts)
+        goto(FinalSmallTalk)
     }
 
     onResponse<UserNotInterested> {
@@ -324,7 +338,7 @@ val AdviceFour : State = state(parent = ConversationParent) {
 
 val adviceMap = mutableMapOf<Int, State>(
     1 to AdviceOneQuestion,
-    2 to AdviceTwoQuestion,
+    //2 to AdviceTwoQuestion,
     3 to AdviceThreeQuestion,
     4 to AdviceFourQuestion
 )

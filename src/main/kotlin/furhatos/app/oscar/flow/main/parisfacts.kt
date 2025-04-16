@@ -1,6 +1,7 @@
 package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
+import furhatos.app.oscar.nlu.AskForPlatform
 import furhatos.app.oscar.nlu.UserIsInterested
 import furhatos.app.oscar.nlu.UserNotInterested
 import furhatos.flow.kotlin.*
@@ -19,13 +20,36 @@ val ParisFacts : State = state(parent = ConversationParent) {
         furhat.listen()
     }
 
+    onPartialResponse<AskForPlatform> {
+        furhat.say(utterance {
+            +GesturesLib.ExpressConsidering1()
+            +"I know you may be in a rush to get to your train,"
+            +GesturesLib.ExpressGuilt1()
+            +"but unfortunately the schedule is still loading, "
+            +GesturesLib.ExpressSmileApologetic2()
+            +"so you will have to wait a liiiittle bit longer"
+            +"But as I was saying............"})
+        raise(it, it.secondaryIntent)
+    }
+
     onResponse<UserIsInterested> {
-        furhat.say("Glad you found that interesting! I have some helpful Paris tips and stories for you too!")
+        furhat.say("I'm glad you found that interesting! I have some helpful Paris tips and stories for you too!")
         goto(Advice)
     }
 
     onResponse<UserNotInterested> {
-        furhat.say("Oh, did that not catch your interest? Maybe this will!")
+        furhat.say( utterance{
+            +Gestures.ExpressSad
+            +"Did that not catch your interest? "
+            +GesturesLib.PerformThoughtful2
+            +"Maybe this will!" })
+        reentry()
+    }
+
+    onResponse<AskForPlatform> {
+        furhat.say( {
+            +Gestures.Smile
+            +"I'll get to that in a minute.... after all, good things comes to those who wait!! As I was saying..........."})
         reentry()
     }
 }

@@ -25,12 +25,16 @@ class AskForPlatform : Intent() {
 class UserIsFine : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
+            "me well",
+            "i'm well",
+            "been well",
             "I'm fine",
             "I'm okay",
             "I'm doing well",
             "All good",
             "I'm fine",
             "fine",
+            "alright",
             "I'm alright",
             "great",
             "okay",
@@ -51,7 +55,12 @@ class UserIsFine : Intent() {
             "it's going alright",
             "I'm doing amazing",
             "I'm doing good",
-            "I'm doing fine"
+            "I'm doing fine",
+            "I didn't know",
+            "I did not know",
+            "Eiffel Tower",
+            "more than one",
+
         )
     }
 }
@@ -68,7 +77,9 @@ class UserIsSad : Intent() {
             "I'm feeling a bit sick",
             "its going bad",
             "not good",
-            "im stressed"
+            "im stressed",
+            "stressed",
+            "tired"
         )
     }
 }
@@ -249,6 +260,17 @@ class AdviceThreeSpontaneous : Intent() {
     }
 }
 
+class AdviceThreeIDontKnow : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "I dont know",
+            "don't know",
+            "not sure",
+            "have not had"
+        )
+    }
+}
+
 class AdviceFourExploring : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
@@ -282,6 +304,27 @@ class AdviceFourSitting : Intent() {
             "sit",
             "sitting",
             "tired",
+        )
+    }
+}
+
+class MyTellName(val name: String? = null) : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "My name is",
+            "Call me",
+            "Name is"
+        )
+    }
+}
+
+class EasterEggTriggers : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Can you tell me more",
+            "tell me more",
+            "i want to know",
+            "I want to know more"
         )
     }
 }

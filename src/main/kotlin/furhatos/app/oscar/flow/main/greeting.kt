@@ -3,11 +3,13 @@ package furhatos.app.oscar.flow.main
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.oscar.flow.Parent
 import furhatos.app.oscar.nlu.AskForPlatform
+import furhatos.app.oscar.nlu.MyTellName
 import furhatos.app.oscar.nlu.UserIsFine
 import furhatos.app.oscar.nlu.UserIsSad
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gesture
 import furhatos.gestures.Gestures
+import furhatos.nlu.common.Greeting
 import furhatos.nlu.common.No
 import furhatos.nlu.common.TellName
 
@@ -45,33 +47,29 @@ val Greeting: State = state(Parent) {
     }
 
     onResponse<AskForPlatform> {
-        furhat.run {
-            say(
-                random(
-                    ask1,
-                    ask2,
-                    ask3,
-                    ask4
-                )
-            )
-        }
+        furhat.say(
+            utterance{
+            +random( ask1, ask2, ask3, ask4)
+            +GesturesLib.PerformHeadDown()})
         goto(SmallTalk)
     }
 
-    onResponse<TellName> {
-        val name = it.intent.name
+    onResponse<MyTellName> {
 
         furhat.say(
             utterance{
 
-                +Gestures.BigSmile
-                +"What a beautiful name, $name!"
+                +GesturesLib.ExpressSmileAstonished()
+                +"That's a beautiful name....!"
                 +Gestures.Smile
                 +"Is there anything I can help you with today?" }
         )
         furhat.listen()
     }
 
+    onResponse<Greeting> {
+        reentry()
+    }
 }
 
 fun createGestureUtterance(text: String, gesture : Gesture, loc: String): Utterance {
@@ -97,7 +95,7 @@ val sad2 = createGestureUtterance("Okay, then.",Gestures.ExpressSad, "first")
 val sad3 = createGestureUtterance("Ah, how I love my job.", Gestures.ExpressSad, "first")
 val sad4 = createGestureUtterance("Alright, I'll just be here, with no one to talk to.", Gestures.ExpressSad, "first")
 
-val ask1 = createGestureUtterance("Absolutely, let me check that for you right away...", Gestures.BigSmile, "first")
-val ask2 = createGestureUtterance("I'd be happy to help with that- just one moment...", Gestures.BigSmile, "first")
-val ask3 = createGestureUtterance("Hmmm, good question! Let me verify that quickly...", GesturesLib.ExpressThinking(), "first")
-val ask4 = createGestureUtterance("Sure thing! Let me pull that up for you right away...", Gestures.BigSmile, "first")
+val ask1 = createGestureUtterance("Absolutely, let me check that for you right away........", Gestures.BigSmile, "first")
+val ask2 = createGestureUtterance("I'd be happy to help with that- just one moment.........", Gestures.BigSmile, "first")
+val ask3 = createGestureUtterance("Hmmm, good question! Let me verify that quickly.........", GesturesLib.ExpressThinking(), "first")
+val ask4 = createGestureUtterance("Sure thing! Let me pull that up for you right away........", Gestures.BigSmile, "first")

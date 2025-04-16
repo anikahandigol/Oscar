@@ -2,9 +2,12 @@ package furhatos.app.oscar.flow.main
 
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.oscar.flow.Parent
+import furhatos.app.oscar.nlu.AskForPlatform
+import furhatos.app.oscar.nlu.EasterEggTriggers
 import furhatos.app.oscar.nlu.PoliteInterrupt
 import furhatos.app.oscar.nlu.RudeInterrupt
 import furhatos.flow.kotlin.*
+import furhatos.gestures.Gestures
 
 val ConversationParent : State = state(Parent) {
 
@@ -27,6 +30,26 @@ val ConversationParent : State = state(Parent) {
         polSelector.remove(index)
         furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +polList[index] }
     }
+
+    onResponse<EasterEggTriggers> {
+        goto(EasterEgg)
+    }
+
+    onPartialResponse<AskForPlatform>(instant = true, cond = {it.interrupted}) {
+        raise(it, it.secondaryIntent)
+    }
+
+    onResponse(cond = { it.interrupted }) {
+        furhat.say("Sorry, what did you say again?")
+        furhat.listen()
+    }
+
+    onNoResponse {
+        furhat.say(utterance {
+            +Gestures.ExpressSad
+            +"Hello, is anybody there? I can't hear you." })
+        furhat.listen()
+    }
 }
 
 val polInterrupt1 = utterance {
@@ -42,7 +65,7 @@ val polInterrupt2 = utterance {
     +GesturesLib.ExpressSmileApologetic2()
     +"Oh... I apologise, I just love talking about travelling, I even have a travel instagram account! Anyway......"
     +GesturesLib.PerformThoughtful2
-    +"Your Eurostar train to Paris is leaving at 2 pm, and should be at platformmm........"
+    +"Your Eurostar train to Paris is leaving at 2 pm, and should be at platformmmmm........"
     +GesturesLib.PerformShock1
     +"Oh, I almost forgot to tell you something else....!"
 }
