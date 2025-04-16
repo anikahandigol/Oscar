@@ -18,7 +18,7 @@ val ConversationParent : State = state(Parent) {
         }
         val response = rudeList.random()
         rudeList.remove(response)
-        furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +response }
+        furhat.resumeSpeaking(at = UtterancePoint.PUNCTUATION) { +response }
     }
     onResponse<PoliteInterrupt>(instant = true, cond = {it.interrupted}) {
         polCounter++
@@ -28,12 +28,12 @@ val ConversationParent : State = state(Parent) {
         }
         val index = polSelector.random()
         polSelector.remove(index)
-        furhat.resumeSpeaking(at = UtterancePoint.SEGMENT) { +polList[index] }
+        furhat.resumeSpeaking(at = UtterancePoint.PUNCTUATION) { +polList[index] }
     }
 
-    onResponse<EasterEggTriggers> {
-        goto(EasterEgg)
-    }
+//    onResponse<EasterEggTriggers> {
+//        goto(EasterEgg)
+//    }
 
     onPartialResponse<AskForPlatform>(instant = true, cond = {it.interrupted}) {
         raise(it, it.secondaryIntent)

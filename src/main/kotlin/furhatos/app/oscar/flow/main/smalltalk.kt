@@ -24,8 +24,7 @@ val SmallTalk : State = state(Parent) {
         furhat.say(utterance{
             +Gestures.BigSmile
             +"But in the meantime, I have so much to say about Paris!"})
-        furhat.say(dialogue1)
-        furhat.listen()
+        goto(ParisFacts)
     }
 
     onResponse {
